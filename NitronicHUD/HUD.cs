@@ -9,6 +9,14 @@ namespace NitronicHUD
 {
     public class HUD
     {
+        const float hudOpacity = 0.6f;
+        const float multiplayerAppearDelay = 4.0f;
+        const float multiplayerAppearTime = 1.0f;
+
+        float currentOpacity = 0.0f;
+        float startTime = 0.0f;
+        bool appearFinished = false;
+
         GameObject prefab;
 
         GameObject instance = null;
@@ -19,6 +27,7 @@ namespace NitronicHUD
         Image[] heatLow = new Image[2] { null, null };
         Image[] heatHight = new Image[2] { null, null };
         Image[] flame = new Image[2] { null, null };
+        Graphic[] renderers;
 
         public HUD(GameObject _prefab)
         {
@@ -35,6 +44,11 @@ namespace NitronicHUD
             {
                 onMapEnd();
             });
+
+            Events.Game.PauseToggled.Subscribe(data =>
+            {
+                onPause(data.paused_);
+            });
         }
 
         public void update()
@@ -45,6 +59,22 @@ namespace NitronicHUD
             var car = GetCarLogic();
             if (car == null)
                 return;
+
+            if (G.Sys.NetworkingManager_.IsOnline_ && !appearFinished)
+            {
+                startTime += Time.deltaTime;
+                if (startTime < multiplayerAppearDelay)
+                    currentOpacity = 0;
+                else if (startTime - multiplayerAppearDelay < multiplayerAppearTime)
+                    currentOpacity = hudOpacity * (startTime - multiplayerAppearDelay) / multiplayerAppearTime;
+                else
+                {
+                    currentOpacity = hudOpacity;
+                    appearFinished = true;
+                }
+                updateRenderersOpacity();
+            }
+            else currentOpacity = hudOpacity;
 
             updateHeat(car.Heat_);
 
@@ -84,6 +114,17 @@ namespace NitronicHUD
 
             flame[0] = leftHUD.Find("Flame").GetComponent<Image>();
             flame[1] = rightHUD.Find("Flame").GetComponent<Image>();
+
+            renderers = instance.GetComponentsInChildren<Graphic>();
+
+            if (G.Sys.NetworkingManager_.IsOnline_)
+                currentOpacity = 0;
+            else currentOpacity = hudOpacity;
+
+            updateRenderersOpacity();
+
+            startTime = 0;
+            appearFinished = false;
         }
 
         void onMapEnd()
@@ -107,6 +148,11 @@ namespace NitronicHUD
             flame[1] = null;
         }
 
+        void onPause(bool paused)
+        {
+            instance.SetActive(!paused);
+        }
+
         void updateHeat(float heat)
         {
             const float startBlinkAmount = 0.8f;
@@ -117,7 +163,7 @@ namespace NitronicHUD
 
             foreach (var h in heatHight)
             {
-                h.color = new Color(1, 1, 1, heat);
+                h.color = new Color(1, 1, 1, heat * currentOpacity);
                 h.fillAmount = heat;
             }
             foreach (var h in heatLow)
@@ -130,13 +176,13 @@ namespace NitronicHUD
             float colorValue = 1 - blink;
 
             foreach (var h in huds)
-                h.color = new Color(1, colorValue, colorValue);
+                h.color = new Color(1, colorValue, colorValue, currentOpacity);
 
             float flameValue = 0f;
             if (heat > startFlameAmount)
                 flameValue = (heat - startFlameAmount) / (1 - startFlameAmount);
             foreach (var f in flame)
-                f.color = new Color(1, 1, 1, flameValue);
+                f.color = new Color(1, 1, 1, flameValue * currentOpacity);
 
         }
 
@@ -179,6 +225,16 @@ namespace NitronicHUD
             var data = G.Sys.PlayerManager_.LocalPlayers_[0].playerData_;
             var stats = G.Sys.StatsManager_.GetMatchStats(data);
             scoreText.text = stats.totalPoints_.ToString();
+        }
+
+        void updateRenderersOpacity()
+        {
+            foreach(var r in renderers)
+            {
+                var color = r.color;
+                color.a = currentOpacity;
+                r.color = color;
+            }
         }
 
         static void setSpeedLabel(Text text)

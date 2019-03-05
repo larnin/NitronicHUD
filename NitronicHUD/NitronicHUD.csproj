@@ -44,7 +44,7 @@
       <HintPath>..\Spectrum\Spectrum.Dependencies\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\SteamApps\common\Distance\Distance_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\..\..\Steam\steamapps\common\Distance\Distance_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
