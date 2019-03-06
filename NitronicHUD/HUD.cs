@@ -11,11 +11,12 @@ namespace NitronicHUD
     {
         const float hudOpacity = 0.6f;
         const float multiplayerAppearDelay = 4.0f;
-        const float multiplayerAppearTime = 1.0f;
+        const float appearTime = 1.0f;
 
         float currentOpacity = 0.0f;
         float startTime = 0.0f;
         bool appearFinished = false;
+        bool startedLate = false;
 
         GameObject prefab;
 
@@ -35,7 +36,7 @@ namespace NitronicHUD
             if (prefab == null)
                 return;
 
-            Events.Game.ModeInitialized.Subscribe(data =>
+            Events.GameMode.Go.Subscribe(data =>
             {
                 onMapStart();
             });
@@ -60,19 +61,33 @@ namespace NitronicHUD
             if (car == null)
                 return;
 
-            if (G.Sys.NetworkingManager_.IsOnline_ && !appearFinished)
+            if (!appearFinished)
             {
                 startTime += Time.deltaTime;
-                if (startTime < multiplayerAppearDelay)
-                    currentOpacity = 0;
-                else if (startTime - multiplayerAppearDelay < multiplayerAppearTime)
-                    currentOpacity = hudOpacity * (startTime - multiplayerAppearDelay) / multiplayerAppearTime;
+                if (!startedLate)
+                {
+                    if (startTime < appearTime)
+                        currentOpacity = hudOpacity * startTime / appearTime;
+                    else
+                    {
+                        currentOpacity = hudOpacity;
+                        appearFinished = true;
+                    }
+                    updateRenderersOpacity();
+                }
                 else
                 {
-                    currentOpacity = hudOpacity;
-                    appearFinished = true;
+                    if (startTime < multiplayerAppearDelay)
+                        currentOpacity = 0;
+                    else if (startTime - multiplayerAppearDelay < appearTime)
+                        currentOpacity = hudOpacity * (startTime - multiplayerAppearDelay) / appearTime;
+                    else
+                    {
+                        currentOpacity = hudOpacity;
+                        appearFinished = true;
+                    }
+                    updateRenderersOpacity();
                 }
-                updateRenderersOpacity();
             }
             else currentOpacity = hudOpacity;
 
@@ -125,6 +140,14 @@ namespace NitronicHUD
 
             startTime = 0;
             appearFinished = false;
+
+            var gamemode = G.Sys.GameManager_.Mode_;
+            if (gamemode != null)
+            {
+                var time = gamemode.GetDisplayTime(0);
+                startedLate = time > 1.0f;
+            }
+            else startedLate = false;
         }
 
         void onMapEnd()
