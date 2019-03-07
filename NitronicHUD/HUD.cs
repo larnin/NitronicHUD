@@ -105,10 +105,17 @@ namespace NitronicHUD
             if (prefab == null)
                 return;
 
+            if (G.Sys.ReplayManager_.IsReplayMode_)
+                return;
+
+            var gamemode = G.Sys.GameManager_.Mode_;
+            if (gamemode != null && gamemode is LevelEditorPlayMode)
+                return;
+
             instance = GameObject.Instantiate(prefab);
             if (instance == null)
                 return;
-
+            
             var leftHUD = instance.transform.Find("Hud_Left");
             var rightHUD = instance.transform.Find("Hud_Right");
             timeText = instance.transform.Find("Time").GetComponent<Text>();
@@ -140,8 +147,7 @@ namespace NitronicHUD
 
             startTime = 0;
             appearFinished = false;
-
-            var gamemode = G.Sys.GameManager_.Mode_;
+            
             if (gamemode != null)
             {
                 var time = gamemode.GetDisplayTime(0);
