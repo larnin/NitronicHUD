@@ -33,10 +33,9 @@ namespace NitronicHUD
         public HUD(GameObject _prefab)
         {
             prefab = _prefab;
-            if (prefab == null)
-                return;
+            if (prefab == null) return;
 
-            Events.GameMode.Go.Subscribe(data =>
+            Events.GameMode.ModeStarted.Subscribe(data =>
             {
                 onMapStart();
             });
@@ -54,12 +53,10 @@ namespace NitronicHUD
 
         public void update()
         {
-            if (instance == null)
-                return;
+            if (instance == null) return;
 
             var car = GetCarLogic();
-            if (car == null)
-                return;
+            if (car == null) return;
 
             if (!appearFinished)
             {
@@ -102,19 +99,14 @@ namespace NitronicHUD
 
         void onMapStart()
         {
-            if (prefab == null)
-                return;
-
-            if (G.Sys.ReplayManager_.IsReplayMode_)
-                return;
+            if (prefab == null || G.Sys.ReplayManager_.IsReplayMode_) return;
 
             var gamemode = G.Sys.GameManager_.Mode_;
             if (gamemode != null && gamemode is LevelEditorPlayMode)
                 return;
 
             instance = GameObject.Instantiate(prefab);
-            if (instance == null)
-                return;
+            if (instance == null) return;
             
             var leftHUD = instance.transform.Find("Hud_Left");
             var rightHUD = instance.transform.Find("Hud_Right");
@@ -177,10 +169,7 @@ namespace NitronicHUD
             flame[1] = null;
         }
 
-        void onPause(bool paused)
-        {
-            instance.SetActive(!paused);
-        }
+        void onPause(bool paused) => instance.SetActive(!paused);
 
         void updateHeat(float heat)
         {

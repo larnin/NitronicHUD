@@ -1,69 +1,86 @@
-﻿using Spectrum.API;
-using Spectrum.API.Interfaces.Plugins;
+﻿using Spectrum.API.Interfaces.Plugins;
 using Spectrum.API.Interfaces.Systems;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Spectrum.API.Configuration;
-using System.IO;
-using Harmony;
-using System.Reflection;
-using Spectrum.API.Experimental;
+using Spectrum.API.Storage;
 
 namespace NitronicHUD
 {
     public class Entry : IPlugin, IUpdatable
     {
-        const string bundleName = "hud";
+        const string hudBundleName = "hud";
+        const string countdownBundleName = "countdown";
 
         HUD hud = null;
+        COUNTDOWN countdown = null;
 
         public void Initialize(IManager manager, string ipcIdentifier)
         {
-            var asset = new Assets(bundleName);
-            if(asset.Bundle == null)
+            InitHUD();
+            InitCOUNTDOWN();
+        }
+
+        public void InitHUD()
+        {
+            var asset_hud = new Assets(hudBundleName);
+            if (asset_hud.Bundle == null)
             {
-                LogError("Can't load the " + bundleName + " bundle!");
+                LogError("Can't load the " + hudBundleName + " bundle!");
                 return;
             }
 
             string assetName = "";
 
-            foreach (var n in asset.Bundle.GetAllAssetNames())
-            {
+            foreach (var n in asset_hud.Bundle.GetAllAssetNames())
                 if (n.EndsWith(".prefab"))
                 {
                     assetName = n;
                     break;
                 }
-            }
 
-            if(assetName.Length == 0)
+            if (assetName.Length == 0)
             {
-                LogError("The " + bundleName + " bundle doesn't countain a prefab");
+                LogError("The " + hudBundleName + " bundle doesn't countain a prefab");
                 return;
             }
 
-            var obj = asset.Bundle.LoadAsset<GameObject>(assetName);
-            if(obj == null)
+            var obj = asset_hud.Bundle.LoadAsset<GameObject>(assetName);
+            if (obj == null)
             {
-                LogError("Error when loading the prefab " + assetName + " from bundle " + bundleName);
+                LogError("Error when loading the prefab " + assetName + " from bundle " + hudBundleName);
                 return;
             }
 
             hud = new HUD(obj);
         }
 
-        public void Update()
+        public void InitCOUNTDOWN()
         {
-            if (hud != null)
-                hud.update();
+            var asset_countdown = new Assets(countdownBundleName);
+            if (asset_countdown.Bundle == null)
+            {
+                LogError("Can't load the " + countdownBundleName + " bundle!");
+                return;
+            }
+
+            string assetName = "Assets/Prefabs/NitronicCountdownHUD.prefab";
+
+            var obj = asset_countdown.Bundle.LoadAsset<GameObject>(assetName);
+            if (obj == null)
+            {
+                LogError("Error when loading the prefab " + assetName + " from bundle " + countdownBundleName);
+                return;
+            }
+
+            countdown = new COUNTDOWN(obj);
         }
 
-        public static void LogError(string message)
+        public void Update()
         {
-            Console.Out.WriteLine("ERROR: " + message);
+            if (hud != null) hud.update();
+            if (countdown != null) countdown.update();
         }
+
+        public static void LogError(string message) => Console.Out.WriteLine("ERROR: " + message);
     }
 }
