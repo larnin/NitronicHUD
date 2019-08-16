@@ -31,11 +31,7 @@ namespace NitronicHUD
         {
             FileInfo info = GetFile($"Audio/{file}");
             if (info.Exists)
-            {
                 AudioFiles.Add(Path.GetFileNameWithoutExtension(info.FullName), new AudioClip(info.FullName));
-                Log.Success($"Added clip \"{Path.GetFileNameWithoutExtension(info.FullName)}\"");
-
-            }
         }
 
         public static AudioClip GetClip(string name)
