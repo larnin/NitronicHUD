@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Spectrum.API.Storage;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +7,8 @@ namespace NitronicHUD
 {
     public class HUD
     {
+        const string hudBundleName = "hud";
+
         const float hudOpacity = 0.6f;
         const float multiplayerAppearDelay = 4.0f;
         const float appearTime = 1.0f;
@@ -49,6 +49,40 @@ namespace NitronicHUD
             {
                 onPause(data.paused_);
             });
+        }
+
+        public static HUD Create()
+        {
+            var asset_hud = new Assets(hudBundleName);
+            if (asset_hud.Bundle == null)
+            {
+                Entry.LogError($"Can't load the {hudBundleName} bundle!");
+                return null;
+            }
+
+            string assetName = "";
+
+            foreach (var n in asset_hud.Bundle.GetAllAssetNames())
+                if (n.EndsWith(".prefab"))
+                {
+                    assetName = n;
+                    break;
+                }
+
+            if (assetName.Length == 0)
+            {
+                Entry.LogError($"The {hudBundleName} bundle doesn't countain a prefab");
+                return null;
+            }
+
+            var obj = asset_hud.Bundle.LoadAsset<UnityEngine.GameObject>(assetName);
+            if (obj == null)
+            {
+                Entry.LogError($"Error when loading the prefab {assetName} from bundle {hudBundleName}");
+                return null;
+            }
+
+            return new HUD(obj);
         }
 
         public void update()

@@ -3,11 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A183AD18-B1EC-4C39-B3A8-4969B0D5B084}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugin Included Files", "Plugin Included Files", "{A183AD18-B1EC-4C39-B3A8-4969B0D5B084}"
+	ProjectSection(SolutionItems) = preProject
+		Plugin Included Files\plugin.json = Plugin Included Files\plugin.json
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitronicHUD", "NitronicHUD\NitronicHUD.csproj", "{7EE4C9FC-1060-486E-86E4-5FB8FEF570FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectrum.API", "Spectrum\Spectrum.API\Spectrum.API.csproj", "{A9CFD86D-1604-4C80-B02B-E60AD98BA86F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{230BE0FA-7007-43D1-B6D0-8AC48AA69841}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Audio", "Audio", "{844F4DF7-DDA8-44B6-AE5C-BF40FAB7506D}"
+	ProjectSection(SolutionItems) = preProject
+		Plugin Included Files\Data\Audio\StartBeep1.wav = Plugin Included Files\Data\Audio\StartBeep1.wav
+		Plugin Included Files\Data\Audio\StartBeep2.wav = Plugin Included Files\Data\Audio\StartBeep2.wav
+		Plugin Included Files\Data\Audio\StartBeep3.wav = Plugin Included Files\Data\Audio\StartBeep3.wav
+		Plugin Included Files\Data\Audio\StartBeepGo.wav = Plugin Included Files\Data\Audio\StartBeepGo.wav
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{F1324DB8-1640-4492-9B00-0F65814B96B4}"
+	ProjectSection(SolutionItems) = preProject
+		Plugin Included Files\Assets\countdown = Plugin Included Files\Assets\countdown
+		Plugin Included Files\Assets\hud = Plugin Included Files\Assets\hud
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +45,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{230BE0FA-7007-43D1-B6D0-8AC48AA69841} = {A183AD18-B1EC-4C39-B3A8-4969B0D5B084}
+		{844F4DF7-DDA8-44B6-AE5C-BF40FAB7506D} = {230BE0FA-7007-43D1-B6D0-8AC48AA69841}
+		{F1324DB8-1640-4492-9B00-0F65814B96B4} = {A183AD18-B1EC-4C39-B3A8-4969B0D5B084}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6E18618-C4EC-4611-9B8F-E58D77F5F447}
