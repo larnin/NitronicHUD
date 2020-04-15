@@ -1,4 +1,5 @@
-﻿using Spectrum.API.Interfaces.Plugins;
+﻿#pragma warning disable RCS1146
+using Spectrum.API.Interfaces.Plugins;
 using Spectrum.API.Interfaces.Systems;
 using Spectrum.API.Storage;
 using Harmony;
@@ -10,8 +11,8 @@ namespace NitronicHUD
 {
     public class Entry : IPlugin, IUpdatable
     {
-        HUD hud = null;
-        COUNTDOWN countdown = null;
+        private HUD hud = null;
+        private COUNTDOWN countdown = null;
 
         public void Initialize(IManager manager, string ipcIdentifier)
         {
@@ -26,8 +27,14 @@ namespace NitronicHUD
         public void Update()
         {
             COUNTDOWN_ANNOUNCER.Update();
-            if (hud != null) hud.update();
-            if (countdown != null) countdown.update();
+            if (hud != null)
+            {
+                hud.update();
+            }
+            if (countdown != null)
+            {
+                countdown.update();
+            }
         }
 
         public static void LogError(string message) => Log.Error($"ERROR: {message}");

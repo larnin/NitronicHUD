@@ -1,0 +1,15 @@
+{
+  "FriendlyName": "Custom Campaign",
+  "Author": "Larnin (Nico); Reherc",
+  "AuthorContact": "Github: @larnin (SteamID : larnin - Discord : Nico#5480) ; @REHERC",
+  "CompatibleAPILevel": 6,
+  "IPCIdentifier": "NitronicHUD",
+  "ModuleFileName": "NitronicHUD.plugin.dll",
+  "EntryClassName": "Entry",
+  "Priority": 10,
+  "Dependencies": [
+    "Newtonsoft.Json.dll",
+    "NAudio.dll"
+  ],
+  "SkipLoad": false
+}

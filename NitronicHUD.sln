@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugin Included Files", "Plugin Included Files", "{A183AD18-B1EC-4C39-B3A8-4969B0D5B084}"
-	ProjectSection(SolutionItems) = preProject
-		Plugin Included Files\plugin.json = Plugin Included Files\plugin.json
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitronicHUD", "NitronicHUD\NitronicHUD.csproj", "{7EE4C9FC-1060-486E-86E4-5FB8FEF570FF}"
 EndProject
@@ -26,6 +23,33 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{F1324D
 	ProjectSection(SolutionItems) = preProject
 		Plugin Included Files\Assets\countdown = Plugin Included Files\Assets\countdown
 		Plugin Included Files\Assets\hud = Plugin Included Files\Assets\hud
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Referenced Assemblies", "Referenced Assemblies", "{29E557B8-D996-4419-828A-EF2CAF85CCFB}"
+	ProjectSection(SolutionItems) = preProject
+		Referenced Assemblies\Assembly-CSharp-firstpass.dll = Referenced Assemblies\Assembly-CSharp-firstpass.dll
+		Referenced Assemblies\Assembly-CSharp.dev.dll = Referenced Assemblies\Assembly-CSharp.dev.dll
+		Referenced Assemblies\NAudio.dll = Referenced Assemblies\NAudio.dll
+		Referenced Assemblies\Spectrum.API.dll = Referenced Assemblies\Spectrum.API.dll
+		Referenced Assemblies\UnityEngine.dll = Referenced Assemblies\UnityEngine.dll
+		Referenced Assemblies\UnityEngine.UI.dll = Referenced Assemblies\UnityEngine.UI.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{2C9E2952-262F-48FF-BB45-0C471E6085DC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spectrum", "Spectrum", "{2F03F13F-8825-436F-95FD-6E91CC78C2BE}"
+	ProjectSection(SolutionItems) = preProject
+		Include\Spectrum\plugin.json = Include\Spectrum\plugin.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Git", "Git", "{CF65699A-11A9-43EE-8DF8-B734A3A9ED3B}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.gitmodules = .gitmodules
+		AUTHORS.md = AUTHORS.md
+		README.md = README.md
+		SPECTRUM_LICENSE.md = SPECTRUM_LICENSE.md
 	EndProjectSection
 EndProject
 Global
@@ -50,6 +74,7 @@ Global
 		{230BE0FA-7007-43D1-B6D0-8AC48AA69841} = {A183AD18-B1EC-4C39-B3A8-4969B0D5B084}
 		{844F4DF7-DDA8-44B6-AE5C-BF40FAB7506D} = {230BE0FA-7007-43D1-B6D0-8AC48AA69841}
 		{F1324DB8-1640-4492-9B00-0F65814B96B4} = {A183AD18-B1EC-4C39-B3A8-4969B0D5B084}
+		{2F03F13F-8825-436F-95FD-6E91CC78C2BE} = {2C9E2952-262F-48FF-BB45-0C471E6085DC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6E18618-C4EC-4611-9B8F-E58D77F5F447}
