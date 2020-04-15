@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using static NitronicHUD.Util;
-using static NitronicHUD.Plugin;
-using UnityEngine;
 
 namespace NitronicHUD
 {
