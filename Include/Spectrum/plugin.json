@@ -9,7 +9,8 @@
   "Priority": 10,
   "Dependencies": [
     "Newtonsoft.Json.dll",
-    "NAudio.dll"
+    "NAudio.dll",
+    "0Harmony.dll.dll"
   ],
   "SkipLoad": false
 }
