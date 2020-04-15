@@ -1,4 +1,5 @@
-﻿using NitronicHUD.UnityScripts;
+﻿#pragma warning disable IDE1006, RCS1021, RCS1163
+using NitronicHUD.UnityScripts;
 using Spectrum.API.Storage;
 using System;
 using UnityEngine;
@@ -7,17 +8,20 @@ namespace NitronicHUD
 {
     public class COUNTDOWN
     {
-        const string countdownBundleName = "countdown";
+        private const string countdownBundleName = "countdown";
 
-        GameObject prefab;
-        GameObject instance = null;
+        private readonly GameObject prefab;
+        private GameObject instance = null;
 
-        Countdown[] digits = new Countdown[4] { null, null, null, null };
+        private readonly Countdown[] digits = new Countdown[4] { null, null, null, null };
 
         public COUNTDOWN(GameObject _prefab)
         {
             prefab = _prefab;
-            if (prefab == null) return;
+            if (prefab == null)
+            {
+                return;
+            }
 
             Events.GameMode.ModeStarted.Subscribe(data =>
             {
@@ -44,7 +48,7 @@ namespace NitronicHUD
                 return null;
             }
 
-            string assetName = "Assets/Prefabs/NitronicCountdownHUD.prefab";
+            const string assetName = "Assets/Prefabs/NitronicCountdownHUD.prefab";
 
             var obj = asset_countdown.Bundle.LoadAsset<UnityEngine.GameObject>(assetName);
             if (obj == null)
@@ -56,16 +60,24 @@ namespace NitronicHUD
             return new COUNTDOWN(obj);
         }
 
-        void onMapStart()
+        private void onMapStart()
         {
-            if (prefab == null || G.Sys.ReplayManager_.IsReplayMode_) return;
+            if (prefab == null || G.Sys.ReplayManager_.IsReplayMode_)
+            {
+                return;
+            }
 
             var gamemode = G.Sys.GameManager_.Mode_;
             if (gamemode != null && gamemode is LevelEditorPlayMode)
+            {
                 return;
+            }
 
             instance = GameObject.Instantiate(prefab);
-            if (instance == null) return;
+            if (instance == null)
+            {
+                return;
+            }
 
             digits[0] = instance.transform.FindChild("NR-3").gameObject.AddComponent<Countdown>();
             digits[0].StartKey = -3f;
@@ -85,25 +97,35 @@ namespace NitronicHUD
 
         }
 
-        void onPause(bool paused) => instance.SetActive(!paused);
+        private void onPause(bool paused) => instance.SetActive(!paused);
 
-        void onMapEnd()
+        private void onMapEnd()
         {
-            if (instance == null) return;
+            if (instance == null)
+            {
+                return;
+            }
 
             GameObject.Destroy(instance);
 
             instance = null;
             for (int i = 0; i < digits.Length; i++)
+            {
                 digits[i] = null;
+            }
         }
 
         public void update()
         {
-            if (instance == null) return;
+            if (instance == null)
+            {
+                return;
+            }
 
             foreach (Countdown digit in digits)
-                digit.Time = Convert.ToSingle(Math.Min(Timex.ModeTime_,5.0d));
+            {
+                digit.Time = Convert.ToSingle(Math.Min(Timex.ModeTime_, 5.0d));
+            }
         }
     }
 }

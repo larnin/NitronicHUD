@@ -13,7 +13,7 @@ namespace NitronicHUD
         public static Dictionary<string, AudioClip> AudioFiles = new Dictionary<string, AudioClip>();
 
         public static float Volume => Audio.MasterVolume_ * Audio.AnnouncerVolume_;
-        private static AudioSettings Audio = G.Sys.OptionsManager_.Audio_;
+        private static readonly AudioSettings Audio = G.Sys.OptionsManager_.Audio_;
 
         public static void Initialize()
         {
@@ -31,7 +31,9 @@ namespace NitronicHUD
         {
             FileInfo info = GetFile($"Audio/{file}");
             if (info.Exists)
+            {
                 AudioFiles.Add(Path.GetFileNameWithoutExtension(info.FullName), new AudioClip(info.FullName));
+            }
         }
 
         public static AudioClip GetClip(string name)
@@ -50,9 +52,13 @@ namespace NitronicHUD
 
         public static void Update()
         {
-            if(AllowCustomMusic_)
+            if (AllowCustomMusic_)
+            {
                 foreach (AudioClip clip in AudioFiles.Values.ToArray())
+                {
                     clip.SetVolume(Volume);
+                }
+            }
         }
     }
 }
