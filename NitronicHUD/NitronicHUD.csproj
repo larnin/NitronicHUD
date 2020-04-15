@@ -92,17 +92,22 @@
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>SET INCLUDE=$(SolutionDir)Include\
+SET RESOURCES=$(SolutionDir)Plugin Included Files\
 SET BUILD=$(ProjectDir)$(OutDir)
 SET PACKAGES=$(SolutionDir)Build\NitronicHUD - Spectrum API\
 
 CALL :MAKEDIR "%25PACKAGES%25"
 CALL :MAKEDIR "%25PACKAGES%25\Dependencies"
+CALL :MAKEDIR "%25PACKAGES%25\Assets
 
 CALL :COPY "%25INCLUDE%25\Spectrum\plugin.json" "%25PACKAGES%25"
 CALL :COPY "%25BUILD%25NitronicHUD.plugin.dll" "%25PACKAGES%25"
 CALL :COPY "%25BUILD%25Newtonsoft.Json.dll" "%25PACKAGES%25\Dependencies"
 CALL :COPY "%25BUILD%25NAudio.dll" "%25PACKAGES%25\Dependencies"
 CALL :COPY "%25BUILD%250Harmony.dll" "%25PACKAGES%25\Dependencies"
+
+CALL :COPYDIR "%25RESOURCES%25Assets" "%25PACKAGES%25\Assets"
+CALL :COPYDIR "%25RESOURCES%25dATA" "%25PACKAGES%25\Data"
 
 EXIT 0
 
@@ -112,6 +117,10 @@ GOTO :EOF
 
 :COPY
 XCOPY /s /Y /v %251 %252
+GOTO :EOF
+
+:COPYDIR
+XCOPY /i /s /Y /v %251 %252
 GOTO :EOF</PostBuildEvent>
   </PropertyGroup>
 </Project>
