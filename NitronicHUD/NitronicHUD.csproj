@@ -20,7 +20,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -29,7 +29,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
@@ -102,6 +102,7 @@ CALL :COPY "%25INCLUDE%25\Spectrum\plugin.json" "%25PACKAGES%25"
 CALL :COPY "%25BUILD%25NitronicHUD.plugin.dll" "%25PACKAGES%25"
 CALL :COPY "%25BUILD%25Newtonsoft.Json.dll" "%25PACKAGES%25\Dependencies"
 CALL :COPY "%25BUILD%25NAudio.dll" "%25PACKAGES%25\Dependencies"
+CALL :COPY "%25BUILD%250Harmony.dll" "%25PACKAGES%25\Dependencies"
 
 EXIT 0
 
