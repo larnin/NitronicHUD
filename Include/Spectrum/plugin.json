@@ -10,7 +10,7 @@
   "Dependencies": [
     "Newtonsoft.Json.dll",
     "NAudio.dll",
-    "0Harmony.dll.dll"
+    "0Harmony.dll"
   ],
   "SkipLoad": false
 }
